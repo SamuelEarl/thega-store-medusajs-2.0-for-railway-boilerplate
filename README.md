@@ -61,8 +61,47 @@ Video instructions: https://youtu.be/PPxenu7IjGM
 - `pnpm install` or `npm i`
 - Rename `.env.template` ->  `.env`
 - To connect to your online database from your local machine, copy the `DATABASE_URL` value auto-generated on Railway and add it to your `.env` file.
-  - If connecting to a new database, for example a local one, run `pnpm ib` or `npm run ib` to seed the database.
+  - If connecting to a new database, for example a local one, run `pnpm ib` or `npm run ib` to seed the database. See the following instructions.
 - `pnpm dev` or `npm run dev`
+
+### Run Postgres in a Docker container for local development
+
+_Most of these notes were taken from this video: [Run Postgres in a Docker Container (Easiest PostgreSQL Setup)](https://www.youtube.com/watch?v=Hs9Fh1fr5s8)_
+
+Open Docker Desktop so Docker Engine is running. Then run this command to start a container:
+
+```
+docker run \
+  --name postgres-thega \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_DB=thega_dev_db \
+  -p 5432:5432 \
+  -d postgres
+```
+
+### pgAdmin Configs
+
+1. Register Server
+    1.1 Name: thega_dev_db_server
+
+```
+DATABASE_URL=postgres://postgres:password@localhost:5432/thega_dev_db
+```
+
+### Seed the database
+
+This only needs to be run once for a fresh database.
+
+```
+cd backend/
+pnpm ib
+```
+
+### Persist Postgres data with Docker volumes
+
+Watch this video: [Run Postgres in a Docker Container (Easiest PostgreSQL Setup)](https://www.youtube.com/watch?v=Hs9Fh1fr5s8)
+
 
 ### requirements
 - **postgres database** (Automatic setup when using the Railway template)

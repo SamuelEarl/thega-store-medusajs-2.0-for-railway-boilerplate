@@ -15,6 +15,7 @@
   "scripts": {
     "build": "medusa build && node src/scripts/postBuild.js",
     "seed": "medusa exec ./src/scripts/seed.ts",
+    "__ib_COMMENT__": "ib stands for init-backend. The is an init-backend script located at backend/node_modules/.bin/init-backend. It's a one-time initialization script that sets up Meilisearch, runs migrations, seeds the database, and creates an admin user on first run.",
     "ib": "init-backend",
     "start": "init-backend && cd .medusa/server && medusa start --verbose",
     "dev": "medusa develop",
@@ -56,11 +57,9 @@
     "typescript": "^5.9.3",
     "vite": "^5.4.21"
   },
-  "pnpm": {
-    "overrides": {
-      "fast-xml-parser": "5.5.8",
-      "protobufjs": "7.5.5"
-    }
+  "overrides": {
+    "fast-xml-parser": "5.5.8",
+    "protobufjs": "7.5.5"
   },
   "packageManager": "pnpm@9.10.0",
   "engines": {

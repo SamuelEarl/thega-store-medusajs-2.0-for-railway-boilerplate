@@ -115,6 +115,15 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
     }).format(amount)
   }
 
+  const getCountryName = (countryCode: string) => {
+    try {
+      const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
+      return regionNames.of(countryCode.toUpperCase())
+    } catch {
+      return countryCode.toUpperCase()
+    }
+  }
+
   return (
     <Base preview={preview}>
       <Section>
@@ -155,7 +164,7 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
           {shippingAddress.city}, {shippingAddress.province} {shippingAddress.postal_code}
         </Text>
         <Text style={{ margin: '0 0 20px' }}>
-          {shippingAddress.country_code}
+          {getCountryName(shippingAddress.country_code)}
         </Text>
 
         <Hr style={{ margin: '20px 0' }} />

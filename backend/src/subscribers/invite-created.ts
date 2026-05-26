@@ -5,9 +5,9 @@ import { BACKEND_URL } from '../lib/constants'
 import { EmailTemplates } from '../modules/email-notifications/templates'
 
 export default async function userInviteHandler({
-    event: { data },
-    container,
-  }: SubscriberArgs<any>) {
+  event: { data },
+  container,
+}: SubscriberArgs<any>) {
 
   const notificationModuleService: INotificationModuleService = container.resolve(
     Modules.NOTIFICATION,
@@ -22,8 +22,8 @@ export default async function userInviteHandler({
       template: EmailTemplates.INVITE_USER,
       data: {
         emailOptions: {
-          replyTo: 'info@example.com',
-          subject: "You've been invited to Medusa!"
+          replyTo: process.env.RESEND_FROM_EMAIL || "support@email.livethega.com",
+          subject: "You've been invited to THEGA!"
         },
         inviteLink: `${BACKEND_URL}/app/invite?token=${invite.token}`,
         preview: 'The administration dashboard awaits...'

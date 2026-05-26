@@ -15,9 +15,10 @@ type CartTotalsProps = {
     gift_card_total?: number | null
     currency_code: string
   }
+  countryCode?: string
 }
 
-const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
+const CartTotals: React.FC<CartTotalsProps> = ({ totals, countryCode }) => {
   const {
     currency_code,
     total,
@@ -36,7 +37,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
             Subtotal (excl. shipping and taxes)
           </span>
           <span data-testid="cart-subtotal" data-value={subtotal || 0}>
-            {convertToLocale({ amount: subtotal ?? 0, currency_code })}
+            {convertToLocale({ amount: subtotal ?? 0, currency_code, countryCode })}
           </span>
         </div>
         {!!discount_total && (
@@ -48,20 +49,20 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
               data-value={discount_total || 0}
             >
               -{" "}
-              {convertToLocale({ amount: discount_total ?? 0, currency_code })}
+              {convertToLocale({ amount: discount_total ?? 0, currency_code, countryCode })}
             </span>
           </div>
         )}
         <div className="flex items-center justify-between">
           <span>Shipping</span>
           <span data-testid="cart-shipping" data-value={shipping_total || 0}>
-            {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
+            {convertToLocale({ amount: shipping_total ?? 0, currency_code, countryCode })}
           </span>
         </div>
         <div className="flex justify-between">
           <span className="flex gap-x-1 items-center ">Taxes</span>
           <span data-testid="cart-taxes" data-value={tax_total || 0}>
-            {convertToLocale({ amount: tax_total ?? 0, currency_code })}
+            {convertToLocale({ amount: tax_total ?? 0, currency_code, countryCode })}
           </span>
         </div>
         {!!gift_card_total && (
@@ -73,7 +74,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
               data-value={gift_card_total || 0}
             >
               -{" "}
-              {convertToLocale({ amount: gift_card_total ?? 0, currency_code })}
+              {convertToLocale({ amount: gift_card_total ?? 0, currency_code, countryCode })}
             </span>
           </div>
         )}
@@ -86,7 +87,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
           data-testid="cart-total"
           data-value={total || 0}
         >
-          {convertToLocale({ amount: total ?? 0, currency_code })}
+          {convertToLocale({ amount: total ?? 0, currency_code, countryCode })}
         </span>
       </div>
       <div className="h-px w-full border-b border-gray-200 mt-4" />

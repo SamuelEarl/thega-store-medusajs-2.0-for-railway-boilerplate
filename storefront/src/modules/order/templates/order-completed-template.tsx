@@ -14,10 +14,10 @@ type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder
 }
 
-export default function OrderCompletedTemplate({
+export default async function OrderCompletedTemplate({
   order,
 }: OrderCompletedTemplateProps) {
-  const isOnboarding = cookies().get("_medusa_onboarding")?.value === "true"
+  const isOnboarding = (await cookies()).get("_medusa_onboarding")?.value === "true"
 
   return (
     <div className="py-6 min-h-[calc(100vh-64px)]">
@@ -39,7 +39,10 @@ export default function OrderCompletedTemplate({
             Summary
           </Heading>
           <Items items={order.items} />
-          <CartTotals totals={order} />
+          <CartTotals
+            totals={order}
+            countryCode={order.shipping_address?.country_code}
+          />
           <ShippingDetails order={order} />
           <PaymentDetails order={order} />
           <Help />

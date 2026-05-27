@@ -15,8 +15,6 @@ export default async function orderPlacedHandler({
     relations: ["items", "summary", "shipping_address"]
   });
 
-  console.log("----------- ORDER -----------", order);
-
   try {
     await notificationModuleService.createNotifications({
       to: order.email,

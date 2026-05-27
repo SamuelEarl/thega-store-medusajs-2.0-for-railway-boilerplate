@@ -16,14 +16,18 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
   return (
     <div>
       <Text>
-        We have sent the order confirmation details to{" "}
+        An email from{" "}
+        <span className="text-ui-fg-medium-plus font-semibold">
+          livethega.com
+        </span>
+        {" "}has been sent to{" "}
         <span
           className="text-ui-fg-medium-plus font-semibold"
           data-testid="order-email"
         >
           {order.email}
         </span>
-        .
+        {" "}with your order confirmation details.
       </Text>
       <Text className="mt-2">
         Please check your spam folder if you don't receive an email within a few minutes.

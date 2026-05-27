@@ -26,6 +26,9 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         .
       </Text>
       <Text className="mt-2">
+        Please check your spam folder if you don't receive an email within a few minutes.
+      </Text>
+      <Text className="mt-8">
         Order date:{" "}
         <span data-testid="order-date">
           {new Date(order.created_at).toDateString()}

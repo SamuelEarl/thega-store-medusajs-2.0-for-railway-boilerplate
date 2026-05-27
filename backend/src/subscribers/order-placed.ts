@@ -24,12 +24,12 @@ export default async function orderPlacedHandler({
       template: EmailTemplates.ORDER_PLACED,
       data: {
         emailOptions: {
-          replyTo: process.env.RESEND_FROM_EMAIL || "support@email.livethega.com",
-          subject: "Your order has been placed"
+          replyTo: process.env.RESEND_FROM_EMAIL || "THEGA <no-reply@email.livethega.com>",
+          subject: "THEGA order confirmation",
         },
         order,
         shippingAddress: order.shipping_address,
-        preview: "Thank you for your order!"
+        preview: "Thank you for ordering from THEGA!"
       }
     });
   } catch (error) {

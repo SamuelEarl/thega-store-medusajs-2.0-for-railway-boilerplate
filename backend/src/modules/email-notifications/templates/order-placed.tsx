@@ -102,7 +102,7 @@ const getLocaleFromCountryCode = (countryCode: string): string => {
 
 export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
   PreviewProps: OrderPlacedPreviewProps
-} = ({ order, shippingAddress, preview = 'Your order has been placed!' }) => {
+} = ({ order, shippingAddress, preview = 'THEGA order confirmation!' }) => {
   // Use shipping address country code to determine locale formatting
   const locale = shippingAddress.country_code
     ? getLocaleFromCountryCode(shippingAddress.country_code)
@@ -131,35 +131,25 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
           Order Confirmation
         </Text>
 
-        <Text style={{ margin: '0 0 15px' }}>
-          Dear {shippingAddress.first_name} {shippingAddress.last_name},
-        </Text>
-
         <Text style={{ margin: '0 0 30px' }}>
-          Thank you for your recent order! Here are your order details:
+          Thank you for your order, {shippingAddress.first_name}!
         </Text>
 
         <Text style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 10px' }}>
-          Order Summary
-        </Text>
-        <Text style={{ margin: '0 0 5px' }}>
-          Order ID: {order.id}
-        </Text>
-        <Text style={{ margin: '0 0 5px' }}>
-          Order Date: {new Date(order.created_at).toLocaleDateString()}
-        </Text>
-        <Text style={{ margin: '0 0 20px' }}>
-          Total: {formatCurrency(Number(order.summary.current_order_total), order.currency_code)}
+          Order Details
         </Text>
 
-        <Hr style={{ margin: '20px 0' }} />
-
-        <Text style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 10px' }}>
-          Shipping Address
+        <Text style={{ margin: '0 0 5px' }}>
+          {shippingAddress.first_name} {shippingAddress.last_name}
         </Text>
         <Text style={{ margin: '0 0 5px' }}>
           {shippingAddress.address_1}
         </Text>
+        {shippingAddress.address_2 && (
+          <Text style={{ margin: '0 0 5px' }}>
+            {shippingAddress.address_2}
+          </Text>
+        )}
         <Text style={{ margin: '0 0 5px' }}>
           {shippingAddress.city}, {shippingAddress.province} {shippingAddress.postal_code}
         </Text>
@@ -167,11 +157,17 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
           {getCountryName(shippingAddress.country_code)}
         </Text>
 
-        <Hr style={{ margin: '20px 0' }} />
+        {/* <Hr style={{ margin: '20px 0' }} /> */}
+        <br />
 
-        <Text style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 15px' }}>
-          Order Items
+        <Text style={{ margin: '0 0 5px' }}>
+          Order ID: {order.id}
         </Text>
+        <Text style={{ margin: '0 0 5px' }}>
+          Order Date: {new Date(order.created_at).toLocaleDateString()}
+        </Text>
+
+        <br />
 
         <table style={{
           width: '100%',
@@ -182,6 +178,7 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
           <thead>
             <tr style={{ backgroundColor: '#f2f2f2' }}>
               <th style={{ padding: '8px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Item</th>
+              <th style={{ padding: '8px', borderBottom: '1px solid #ddd', textAlign: 'left' }}>Attributes</th>
               <th style={{ padding: '8px', borderBottom: '1px solid #ddd', textAlign: 'center' }}>Quantity</th>
               <th style={{ padding: '8px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>Price</th>
             </tr>
@@ -190,7 +187,10 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
             {order.items.map((item) => (
               <tr key={item.id}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
-                  {item.title} - {item.product_title}
+                  {item.product_title}
+                </td>
+                <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                  {item.variant_title}
                 </td>
                 <td style={{ padding: '8px', borderBottom: '1px solid #ddd', textAlign: 'center' }}>
                   {item.quantity}
@@ -202,6 +202,10 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
             ))}
           </tbody>
         </table>
+
+        <Text style={{ margin: '20px 0', fontWeight: 'bold' }}>
+          Total: {formatCurrency(Number(order.summary.current_order_total), order.currency_code)}
+        </Text>
       </Section>
     </Base>
   )
